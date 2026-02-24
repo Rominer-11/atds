@@ -1,5 +1,11 @@
 """
 atds.py
+
+Includes the follwing classes
+    - Stack
+    - Queue
+    - Deque
+
 """
 
 __author__ = "August Cho"
