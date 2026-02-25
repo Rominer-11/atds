@@ -154,6 +154,38 @@ class Deque():
         """
         return str(self.deque)
 
+class Node(data, pointer):
+    def __init__(self):
+        """
+        Initializes the node class
+        """
+        self.data = data
+        self.pointer = pointer
+
+    def get_data(self):
+        """
+        Returns the data of the nade
+        """
+        return self.data
+
+    def get_next(self):
+        """
+        Returns the pointer of the node
+        """
+        return self.pointer
+
+    def set_data(self, data):
+        """
+        Sets the data of the node
+        """
+        self.data = data
+
+    def set_next(self, pointer):
+        """
+        Sets the pointer of the node
+        """
+        self.pointer = pointer
+
 def main():
     pass
 
