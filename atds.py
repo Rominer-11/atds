@@ -154,13 +154,13 @@ class Deque():
         """
         return str(self.deque)
 
-class Node(data, pointer):
-    def __init__(self):
+class Node():
+    def __init__(self, data):
         """
         Initializes the node class
         """
         self.data = data
-        self.pointer = pointer
+        self.pointer = None
 
     def get_data(self):
         """
@@ -185,6 +185,80 @@ class Node(data, pointer):
         Sets the pointer of the node
         """
         self.pointer = pointer
+
+    def __repr__(self):
+        """
+        String representation of node
+        """
+        return "Node[data=" + str(self.data) + ",next=" + str(self.pointer) + "]"
+
+class UnorderedList():
+    def __init__(self):
+        """
+        Initializes the unordered list
+        """
+        self.head = None
+    
+    def add(self, item):
+        """
+        Adds an item to the unordered list
+        """
+        new_node = Node(item)
+        new_node.set_next(self.head)
+        self.head = new_node
+        
+    def length(self):
+        """
+        Returns the length of the list
+        """
+        node_count = 0
+        current = self.head
+        while current != None:
+            node_count += 1
+            current = current.get_next()
+        return node_count
+
+    def is_empty(self):
+        """
+        Returns whether or not the list is empty
+        """
+        return self.head == None
+
+    def remove(self, item):
+        """
+        Removes an item from the list
+        """
+        previous = None
+        current = self.head
+
+        while current != None:
+            if current.get_data() == item:
+                if previous == None:
+                    self.head = current.get_next()
+                    current = current.get_next()
+                else:
+                    previous.set_next(current.get_next())
+                    current = current.get_next()
+            else:
+                previous = current
+                current = current.get_next()
+
+    def __repr__(self):
+        """
+        Function written by Mr. White
+
+        Creates a representation of the list suitable for printing,
+        debugging.
+        """
+        result = "UnorderedList["
+        next_node = self.head
+        while next_node != None:
+            result += str(next_node.get_data()) + ","
+            next_node = next_node.get_next()
+        if result[-1] == ",":
+        result = result[:-1] # remove trailing comma
+        result = result + "]"
+        return result
 
 def main():
     pass
