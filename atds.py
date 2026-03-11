@@ -1,10 +1,12 @@
 """
 atds.py
 
-Includes the follwing classes
+Includes the following classes
     - Stack
     - Queue
     - Deque
+    - Node
+    - Unordered list
 
 """
 
@@ -206,7 +208,90 @@ class UnorderedList():
         new_node = Node(item)
         new_node.set_next(self.head)
         self.head = new_node
+    
+    def append(self, item):
+        """
+        Appends an item to the end of the list
+        """
+        current = self.head
+        previous = None
         
+        while current.get_next() != None:
+            previous = current
+            current = current.get_next()
+
+        current.set_next(Node(item))
+
+    def index(self, item):
+        """
+        Finds the index of a given item
+        """
+        current = self.head
+        index = 0
+        foundIndex = 0
+        found = False
+        while current != None and found == False:
+            if current.get_data() == item:
+                foundIndex = index
+                found = True
+            else:
+                current = current.get_next()
+                index += 1
+
+        return foundIndex
+
+    def insert(self, pos, item):
+        """
+        Inserts an item at a given position
+        """
+        current = self.head
+        previous = None
+        index = 0
+        loop = True
+
+        while loop:
+            if index == pos:
+                newNode = Node(item)
+                if previous != None:
+                    previous.set_next(newNode)
+                if index == 0:
+                    self.head = newNode
+                newNode.set_next(current)
+                loop = False
+            else:
+                previous = current
+                current = current.get_next()
+               
+                index += 1
+
+    def pop(self, pos = None):
+        """
+        Pops item at position
+        """
+        if pos == None:
+            pos = self.length() - 1
+        
+        current = self.head
+        previous = None
+        index = 0
+        returnVal = None
+        loop = True
+        while loop:
+            if index == pos:
+                returnVal = current
+                if index == 0:
+                    self.head = current.get_next()
+                else:
+                    if current != None:
+                        previous.set_next(current.get_next())
+                loop = False
+            else:
+                previous = current
+                current = current.get_next()
+                index += 1
+
+        return returnVal
+
     def length(self):
         """
         Returns the length of the list
@@ -243,11 +328,22 @@ class UnorderedList():
                 previous = current
                 current = current.get_next()
 
-    def __repr__(self):
+    def search(self, item):
         """
-        Function written by Mr. White
+        Searches for a given item in the list
+        """
+        found = False
+        current = self.head
+        while current != None and found == False:
+            if current.get_data() == item:
+                found = True
+            else:
+                current = current.get_next()
 
-        Creates a representation of the list suitable for printing,
+        return found
+
+    def __repr__(self):
+        """Creates a representation of the list suitable for printing,
         debugging.
         """
         result = "UnorderedList["
@@ -255,8 +351,6 @@ class UnorderedList():
         while next_node != None:
             result += str(next_node.get_data()) + ","
             next_node = next_node.get_next()
-        if result[-1] == ",":
-        result = result[:-1] # remove trailing comma
         result = result + "]"
         return result
 
