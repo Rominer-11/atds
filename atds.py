@@ -11,7 +11,7 @@ Includes the following classes
 """
 
 __author__ = "August Cho"
-__version__ = "2026-02-17"
+__version__ = "2026-03-19"
 
 class Stack():
     def __init__(self):
@@ -353,6 +353,86 @@ class UnorderedList():
             next_node = next_node.get_next()
         result = result + "]"
         return result
+
+class LinearSearcher():
+    def __init__(self):
+        pass
+
+    def search(self, array, target):
+        targetIndex = None
+        index = 0
+        while index < len(array) and targetIndex == None:
+            if target == array[index]:
+                targetIndex = index
+            index += 1
+        return targetIndex
+
+class BinarySearcher():
+    def __init__(self):
+        pass
+
+    def search(self, array, target):
+        targetIndex = None
+        upperBound = len(array)
+        lowerBound = 0
+        middleIndex = 1
+        
+        while upperBound > lowerBound and middleIndex != targetIndex and targetIndex == None:
+            middleIndex = lowerBound + ((upperBound - lowerBound) // 2)
+            
+            if array[middleIndex] == target:
+                targetIndex = middleIndex
+            elif array[middleIndex] < target:
+                lowerBound = middleIndex
+            elif array[middleIndex] > target:
+                upperBound = middleIndex
+
+        if middleIndex == targetIndex:
+            if target == array[middleIndex]:
+                targetIndex = middleIndex
+            elif target == array[middleIndex + 1]:
+                targetIndex = middleIndex + 1
+
+        return targetIndex
+
+class HashTable():
+    
+    def __init__(self, size):
+        self.size = size
+        self.slots = []
+        self.data = []
+        self.length = 0
+        for i in range(size):
+            self.slots.append([])
+            self.data.append([])
+
+    def hash_function(self, key):
+        return key % self.size
+
+    def put(self, key, value):
+        index = self.hash_function(key)
+        self.slots[index].append(key)
+        self.data[index].append(value)
+
+        self.length += 1
+
+    def get(self, key):
+        index = self.hash_function(key)
+        subindex = None
+        for i in range(len(self.slots[index])):
+            if self.slots[index][i] == key:
+                subindex = i
+
+        return subindex
+
+    def __len__(self):
+        return self.length
+
+    def __repr__(self):
+        return "Keys: " + str(self.slots) + "\n" + "Values: " + str(self.data)
+
+    def __str__(self):
+        return self.__repr__()
 
 def main():
     pass
