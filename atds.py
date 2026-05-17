@@ -398,7 +398,10 @@ class BinarySearcher():
         return targetIndex
 
 class HashTable():
-    
+    """
+    Hash table class! (Awesome)
+    """
+
     def __init__(self, size):
         self.size = size
         self.slots = []
@@ -420,12 +423,12 @@ class HashTable():
 
     def get(self, key):
         index = self.hash_function(key)
-        subindex = None
+        returnValue = None
         for i in range(len(self.slots[index])):
             if self.slots[index][i] == key:
-                subindex = i
+                returnValue = self.data[index][i]
 
-        return subindex
+        return returnValue
 
     def __len__(self):
         return self.length
