@@ -439,6 +439,77 @@ class HashTable():
     def __str__(self):
         return self.__repr__()
 
+class BinaryHeap():
+    
+    def __init__(self):
+        self.heap_list = [0]
+
+    def insert(self, value):
+        self.heap_list.append(value)
+        self.percolate_up(len(self.heap_list) - 1)
+
+    def percolate_up(self, i):
+        if i > 1:
+            parent = self.heap_list[i // 2]
+            child = self.heap_list[i]
+            if parent > child:
+                self.heap_list[i // 2], self.heap_list[i] = self.heap_list[i], self.heap_list[i // 2]
+                self.percolate_up(i // 2)
+
+    def del_min(self):
+        if len(self.heap_list) > 2:
+            top = self.heap_list[1]
+            bottom = self.heap_list.pop()
+            self.heap_list[1] = bottom
+            self.percolate_down(1)
+        elif len(self.heap_list) == 2:
+            top = self.heap_list.pop()
+        else:
+            top = None
+        return top
+
+    def percolate_down(self, i):
+        if i < (len(self.heap_list) - 1):
+            parent = self.heap_list[i]
+            if (2 * i + 1) < len(self.heap_list):
+                childTwo = self.heap_list[2 * i + 1]
+                childOne = self.heap_list[2 * i]
+		
+                if childTwo < childOne:
+                    if parent > childTwo:
+                        self.heap_list[i], self.heap_list[2 * i + 1] = self.heap_list[2 * i + 1], self.heap_list[i]
+                        self.percolate_down(2 * i + 1)
+                else:
+                    if parent > childOne:
+                        self.heap_list[i], self.heap_list[2 * i] = self.heap_list[2 * i], self.heap_list[i]
+                        self.percolate_down(2 * i)
+		
+            elif (2 * i) < len(self.heap_list):
+                childOne = self.heap_list[2 * i]
+                if parent > childOne:
+                    self.heap_list[i], self.heap_list[2 * i] = self.heap_list[2 * i], self.heap_list[i]
+                    self.percolate_down(2 * i)
+
+
+    def find_min(self):
+        return self.heap_list[1]
+
+    def is_empty(self):
+        return len(self.heap_list) == 1 
+
+    def size(self):
+        return len(self.heap_list) - 1
+    
+    def build_heap(self, alist):
+        i = len(alist) // 2
+        self.current_size = len(alist)
+        self.heap_list = [0] + alist[:]
+        while (i > 0):
+            self.percolate_down(i)
+            i = i - 1
+
+    def __repr__(self):
+        return "BinaryHeap" + str(self.heap_list)
 
 class Vertex(object):
     """Improves the vertex class to include not only a key and neighbors,
